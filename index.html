@@ -1,0 +1,564 @@
+<!Doctype html>
+<html>
+<title >mobileshop</title>
+<head>
+<link rel="icon" type="image/png" href="image.png">
+    
+<meta name="description" content="Get the best deals on Smartphones, Laptops, and Tablets. Compare prices and buy online.">
+<meta name="keywords" content="mobile shop, buy smartphones, compare laptops, cheap tablets, mobile affiliate">
+<meta name="robots" content="index, follow">
+
+
+<style>
+    
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: #f8fafc;
+    color: #1e293b;
+}
+
+
+header {
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+#shopname {
+    font-weight: 800;
+    font-size: 26px;
+    color: #2563eb;
+    letter-spacing: 0.5px;
+}
+
+#heavy-discount #disc {
+    display: inline-block;
+    background-color: #10b981;
+    color: white;
+    text-decoration: none;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+#heavy-discount #disc:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+}
+
+
+.category-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 30px auto 10px;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.tab-btn {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    padding: 12px 28px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    color: #64748b;
+    transition: all 0.3s ease;
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.compare-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    border: 1px solid #e2e8f0;
+}
+
+.compare-section h3 {
+    margin-bottom: 15px;
+    color: #0f172a;
+    font-size: 18px;
+}
+
+.compare-selectors {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.vs-text {
+    font-weight: bold; 
+    color: #64748b;
+}
+
+select {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 15px;
+    background-color: #f8fafc;
+    outline: none;
+}
+
+.compare-btn {
+    background: #0f172a;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.compare-btn:hover {
+    background: #1e293b;
+}
+
+
+#compareResult {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    background: #f1f5f9;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.compare-column {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.compare-column h4 { 
+    color: #2563eb; 
+    margin-bottom: 10px; 
+    font-size: 18px;
+}
+
+.compare-column p { 
+    font-size: 14px; 
+    margin: 6px 0; 
+    border-bottom: 1px solid #f1f5f9; 
+    padding-bottom: 4px;
+}
+
+/* Products Grid */
+#shopitem {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto 60px;
+}
+
+#productGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+
+.card-img-container {
+    width: 100%;
+    height: 200px;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.brand-tag {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #64748b;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.card h3 {
+    font-size: 19px;
+    margin-bottom: 10px;
+    color: #0f172a;
+}
+
+.specs-preview {
+    font-size: 13px;
+    color: #627d98;
+    margin-bottom: 15px;
+    text-align: left;
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.card .price {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2563eb;
+    margin-bottom: 20px;
+}
+
+.buy-btn {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+
+
+
+.buy-btn:hover {
+    background-color: #1d4ed8;
+}
+
+
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    .category-nav {
+        flex-wrap: wrap;
+    }
+    .tab-btn {
+        flex: 1;
+        text-align: center;
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div id="shoplogo">
+            <h2 id="shopname">MOBILE SHOP</h2>
+        </div>
+        <div id="heavy-discount">
+            <a id="disc" href="#" onclick="about(event)">About</a>
+        </div>
+    </header>
+
+    <!-- Category -->
+    <div class="category-nav">
+        <button class="tab-btn active" id="btn-phone">Smartphones</button>
+        <button class="tab-btn" id="btn-laptop">Laptops</button>
+        <button class="tab-btn" id="btn-tablet">Tablets</button>
+    </div>
+
+<!--Smart Compare Tool -->
+    <div class="compare-section">
+        <h3>⚖️ Product Compare Tool</h3>
+        <div class="compare-selectors">
+            <select id="device1">
+                <option value="">Select First Device</option>
+            </select>
+            <span class="vs-text">VS</span>
+            <select id="device2">
+                <option value="">Select Second Device</option>
+            </select>
+            <button class="compare-btn" id="btn-compare">Compare Now</button>
+        </div>
+        <div id="compareResult" style="display: none;"></div>
+    </div>
+
+    
+
+    <!-- Dynamic Inventory Showcase -->
+    <div id="shopitem">
+        <div id="productGrid">
+            <!-- JavaScript variables yahan automatic cards generate karenge -->
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 20px; margin-top: 50px; background: #ffffff; border-top: 1px solid #e2e8f0; color: #64748b;">
+    <p>© 2026 Mobileshop. All Rights Reserved.</p>
+    <!-- Yeh link customer ko normal lagega par owner isse admin panel khol lega -->
+    <!--<a href="admin.html" style="color: #cbd5e1; text-decoration: none; font-size: 12px; margin-top: 5px; display: inline-block;">⚙️ Staff Login</a>-->
+</footer>
+
+<script>
+
+let currentcategory = 'phone';
+let csvdata = [];
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    loadphone();
+    document.getElementById('btn-phone')?.addEventListener('click', (e) => filterCategory('phone', e));
+    document.getElementById('btn-laptop')?.addEventListener('click', (e) => filterCategory('laptop', e));
+    document.getElementById('btn-tablet')?.addEventListener('click', (e) => filterCategory('tablet', e));
+     document.getElementById('btn-compare')?.addEventListener('click', Comparisondevice);
+    
+})
+
+
+
+
+ 
+
+const sheet = "phones.csv"
+//const sheet = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQF60TJZkQWZdA-Q6_PVnffjz2p_gOUt71Lsl70ss8hlZzmbC2QiT5wySyjpE7MpTuXitSMbltuCaKZ/pub?output=csv";
+console.log(sheet);
+
+async function loadphone(){
+    try {
+        let response = await fetch(`${sheet}`);
+        let data = await response.text();
+
+        let rows = data.split('\n');
+        let headers = rows[0].split(',');
+
+        csvdata = rows.slice(1).map(row=>{
+            let cols = row.split(',');
+            let obj = {};
+
+            headers.forEach((header,index)=>{
+            obj[header.trim()]=cols[index]?cols[index].trim():""
+        })
+
+        obj.specs={
+            BRAND:obj.BRAND,
+            MODLE:obj.MODLE,
+            RAM:obj.RAM,
+            STORAGE:obj.STORAGE,
+            CAMERA:obj.CAMERA,
+            BATTERY:obj.BATTERY,
+            PROCESSOR:obj.PROCESSOR
+        }
+        return obj;
+        })
+        
+        
+     console.log(csvdata)
+     product(currentcategory);
+     Comparison();
+
+    }catch(error){
+        console.log("error",error)
+    }
+}
+
+function product(category){
+ let grid = document.getElementById("productGrid");
+    grid.innerHTML = " ";
+    let filter = csvdata.filter(element=>element.category.toLowerCase()==currentcategory);
+
+      
+
+
+
+    filter.forEach(element => {
+        let card = document.createElement('div');
+        card.className = "card";
+        card.innerHTML = `
+        <div>
+                    <div class="brand-tag">${element.BRAND}</div>
+                    <div class="card-img-container">
+                        <img src="${element.IMAGE_LINK}" alt="${element.MODLE}">
+                    </div>
+                    <h3>${element.MODLE}</h3>
+                    <div class="specs-preview">
+                        • <b>RAM/Storage:</b> ${element.specs.RAM} / ${element.specs.STORAGE}<br>
+                        • <b>Processor:</b> ${element.specs.PROCESSOR}<br>
+                        • <b>Battery:</b> ${element.specs.BATTERY}
+                    </div>
+                
+                <div>
+                    <div class="price">${element.PRICE}</div>
+                    <button class="buy-btn" onclick="makeSale('${element.AFFILIATE_LINK
+}')">🛒 Buy Now</button>
+                </div>
+          </div>      `;
+        grid.appendChild(card);    
+    });
+    
+}
+
+function filterCategory(m, event){
+    currentcategory = m;
+    let button = document.querySelectorAll(".tab-btn");
+    button.forEach(btn => btn.classList.remove("active"));
+    if(event) event.target.classList.add("active");
+    product(currentcategory);
+
+}
+
+function Comparison(){
+ let device1 = document.getElementById("device1");
+ let device2 = document.getElementById("device2")
+  
+ if(!device1 || !device2)
+ return;
+
+ device1.innerHTML = `<option value="">select first device </option>`;
+ device2.innerHTML = `<option value=""> select second device </option>`;
+
+ csvdata.forEach( element =>{
+    let opt = `<option value="${element.ID}">[${element.category.toLowerCase()}] ${element.BRAND}-${element.MODLE} </option>`
+ device1.innerHTML += opt;
+ device2.innerHTML += opt;
+
+ }) 
+}
+
+function Comparisondevice(){
+ let device1 = document.getElementById("device1").value;
+ let device2 = document.getElementById("device2").value;
+ let compareResult = document.getElementById("compareResult");
+ if(!device1 || !device2)
+ return alert ("select device");
+
+ let dev1 = csvdata.find(element => element.ID == device1);
+ let dev2 = csvdata.find(element => element.ID == device2);
+
+ compareResult.style.display = 'grid';
+ compareResult.innerHTML = `
+            <div class="compare-column">
+               <h4>${dev1.BRAND} ${dev1.MODLE}</h4>
+                <p><b>Camera:</b> ${dev1.CAMERA}</p>
+                <p><b>Display:</b> ${dev1.DISPLAY}</p>
+                <p><b>Price:</b> ${dev1.PRICE}</p>
+                <p><b>RAM:</b> ${dev1.RAM}</p>
+                <p><b>Processor:</b> ${dev1.PROCESSOR}</p>
+                <p><b>Battery:</b> ${dev1.BATTERY}</p>
+                <p><b>Storage:</b> ${dev1.STORAGE}</p>
+                <p><b>Os:</b> ${dev1.OS}</p>
+                <p><b>Weight:</b> ${dev1.WEIGHT}</p>
+                <p><b>CHARGING_SPEED:</b> ${dev1.CHARGING_SPEED}</p>
+                <p><b>CONNECTIVITY:</b> ${dev1.CONNECTIVITY}</p>
+                <button class="buy-btn" onclick="makeSale('${dev1.AFFILIATE_LINK
+}')">🛒 Buy Now</button
+                
+            </div>
+            <div class="compare-column">
+                <h4>${dev2.BRAND} ${dev2.MODLE}</h4>
+                <p><b>Camera:</b> ${dev2.CAMERA}</p>
+                <p><b>Display:</b> ${dev2.DISPLAY}</p>
+                <p><b>Price:</b> ${dev2.PRICE}</p>
+                <p><b>RAM:</b> ${dev2.RAM}</p>
+                <p><b>Processor:</b> ${dev2.PROCESSOR}</p>
+                <p><b>Battery:</b> ${dev2.BATTERY}</p>
+                <p><b>Storage:</b> ${dev2.STORAGE}</p>
+                <p><b>Os:</b> ${dev2.Os}</p>
+                <p><b>Weight:</b> ${dev2.WEIGHT}</p>
+                <p><b>CHARGING_SPEED:</b> ${dev2.CHARGING_SPEED}</p>
+                <p><b>CONNECTIVITY:</b> ${dev2.CONNECTIVITY}</p>
+                <button class="buy-btn" onclick="makeSale('${dev2.AFFILIATE_LINK
+}')">🛒 Buy Now</button
+            </div>`;
+}
+
+
+function about(event){
+    event.preventDefault();
+
+    let disc = document.getElementById("disc");
+
+    let div = document.createElement("div");
+    div.className = 'about';
+
+
+    div.style.width = "100%";
+div.style.maxWidth = "400px";
+div.style.margin = "15px auto";        
+div.style.padding = "10px 16px";       
+div.style.backgroundColor = "#e6f2ff"; 
+div.style.borderLeft = "4px solid #0066cc"; 
+div.style.borderRadius = "4px";       
+div.style.boxShadow = "0 2px 4px rgba(0,0,0,0.05)"; 
+
+div.style.color = "#004085";
+div.style.fontFamily = "system-ui, -apple-system, sans-serif";
+div.style.fontSize = "14px";           
+div.style.fontWeight = "500";    
+
+
+    div.innerHTML = `<p style="margin:0; display:flex; align-items:center; gap:8px;">
+     <span>This page contains affiliate links. We may earn a small commission at no extra cost to you.</span>
+</p>`;
+        disc.innerHTML ="";
+        disc.append("About");
+    disc.appendChild(div)
+    setTimeout(() => document.querySelector('.about')?.remove(), 3000);
+
+}
+
+
+
+
+
+</script>
+</body>
+
+</html>
