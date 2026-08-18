@@ -3,6 +3,8 @@
 <title >mobileshop</title>
 <head>
 <link rel="icon" type="image/png" href="image.png">
+
+
     
 <meta name="description" content="Get the best deals on Smartphones, Laptops, and Tablets. Compare prices and buy online.">
 <meta name="keywords" content="mobile shop, buy smartphones, compare laptops, cheap tablets, mobile affiliate">
@@ -297,6 +299,91 @@ select {
     }
 }
 
+
+
+
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px; /* Square-ish modern corners */
+  overflow: hidden;
+  width: 320px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 10px 15px;
+  width: 100%;
+  font-size: 15px;
+}
+
+.search-box button {
+  background-color: #007BFF; 
+  border: none;
+  color: white; 
+  padding: 10px 18px;
+  cursor: pointer;
+  font-size: 15px;
+  height: 100%;
+}
+
+.search-box button:hover {
+  background-color: #0056b3;
+}
+
+
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+}
+
+
+.modal-content {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px; 
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  position: relative; 
+  animation: fadeIn 0.3s ease-out; 
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #ff3b30; 
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
     </style>
 </head>
 <body>
@@ -305,6 +392,26 @@ select {
         <div id="shoplogo">
             <h2 id="shopname">MOBILE SHOP</h2>
         </div>
+
+        <div class="search-box">
+  <input type="text" id="input" placeholder="Search...">
+  <button type="button" id="searchBtn" style="display:none;">Search</button> 
+</div>
+
+<!-- Yeh container screen ke beech mein pop-up hoga -->
+<div id="results-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <!-- Cut (Close) ka option -->
+    <span class="close-btn" id="closeModalBtn">&times;</span>
+    
+    <!-- Iske andar aapka search kiya hua data aayega -->
+    <div id="results"></div>
+  </div>
+</div>
+
+
+
+
         <div id="heavy-discount">
             <a id="disc" href="#" onclick="about(event)">About</a>
         </div>
@@ -554,8 +661,83 @@ div.style.fontWeight = "500";
 
 }
 
+function searchitm() {
+  if (typeof csvdata === 'undefined' || !csvdata || csvdata.length === 0) {
+    return "Loading data...";
+  }
+
+  let inputVal = document.getElementById("input").value.toLowerCase().trim();
+  let resultsContainer = document.getElementById("results");
+  let modal = document.getElementById("results-modal");
+  
+  resultsContainer.innerHTML = ""; 
+
+  let matches = csvdata.filter(row => {
+    return Object.values(row).some(value => 
+      String(value).toLowerCase().includes(inputVal)
+    );
+  });
+
+   
+  if (matches.length > 0 && inputVal !== "") {
+    matches.forEach(item => {
+      let userdata = document.createElement("div");
+      userdata.className = "user";
+      
+      
+      userdata.innerHTML = `
+        <h4>${item.BRAND || ''} ${item.MODLE || ''}</h4>
+       <img src="${item.IMAGE_LINK}" >
+        <p><b>Camera:</b> ${item.CAMERA || 'N/A'}</p>
+        <p><b>Display:</b> ${item.DISPLAY || 'N/A'}</p>
+        <p><b>Price:</b> ${item.PRICE || 'N/A'}</p>
+        <p><b>RAM:</b> ${item.RAM || 'N/A'}</p>
+        <p><b>Processor:</b> ${item.PROCESSOR || 'N/A'}</p>
+        <p><b>Battery:</b> ${item.BATTERY || 'N/A'}</p>
+        <p><b>Storage:</b> ${item.STORAGE || 'N/A'}</p>
+        <p><b>Os:</b> ${item.OS || 'N/A'}</p>
+        <p><b>Weight:</b> ${item.WEIGHT || 'N/A'}</p>
+        <p><b>CHARGING_SPEED:</b> ${item.CHARGING_SPEED || 'N/A'}</p>
+        <p><b>CONNECTIVITY:</b> ${item.CONNECTIVITY || 'N/A'}</p>
+        <button class="buy-btn" onclick="makeSale('${item.AFFILIATE_LINK || '#'}')">🛒 Buy Now</button>
+      `;
+
+      resultsContainer.appendChild(userdata);
+    });
+    
+    // Data milte hi popup div ko SCREEN PAR DIKHAYEIN
+    modal.style.display = "flex"; 
+    return "Device found!";
+  }
+}
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const inputElement = document.getElementById("input");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const modal = document.getElementById("results-modal");
+
+  
+  if (inputElement) {
+    inputElement.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        searchitm();
+      }
+    });
+  }
+
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+
+  window.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+});
 
 
 </script>
