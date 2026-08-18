@@ -519,7 +519,7 @@ async function loadphone(){
 function product(category){
  let grid = document.getElementById("productGrid");
     grid.innerHTML = " ";
-    let filter = csvdata.filter(element=>element.category==currentcategory);
+    let filter = csvdata.filter(element=>element.category.toLowerCase()==currentcategory);
 
       
 
