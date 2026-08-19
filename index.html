@@ -516,15 +516,18 @@ async function loadphone(){
     }
 }
 
+    function makeSale(link) {
+    window.open(link, '_blank');
+}
+window.makeSale = makeSale; 
+  
+
+
+    
 function product(category){
  let grid = document.getElementById("productGrid");
     grid.innerHTML = " ";
     let filter = csvdata.filter(element=>element.category.toLowerCase()==currentcategory);
-
-      
-
-
-
     filter.forEach(element => {
         let card = document.createElement('div');
         card.className = "card";
